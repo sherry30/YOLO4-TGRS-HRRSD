@@ -1,0 +1,14 @@
+
+for training
+runfile('train.py', args = '--model_type=scaled_yolo4_csp_darknet --weights_path=logs/000/4-deacay-poly-adam-0.0002-37/ep016-loss51.957-val_loss47.680.h5 --anchors_path=configs/yolo4_anchors.txt --annotation_file="annotations/train.txt" --classes_path=configs/HD_classes.txt --batch_size=5 --freeze_level=0 --learning_rate=0.000001 --optimizer=adam --data_shuffle')
+
+for coco annotations
+runfile('tools/dataset_converter/coco_annotation.py', args='--dataset_path="D:/Assignments/deep learning/data/TGRS-HRRSD-Dataset-mstr-gthb/COCOFormat/Anns/hrrsd_train_m-fld_4352_3084.json" --output_path="annotations/train.txt" --classes_path="configs/HD_classes.txt"')
+
+D:\Assignments\deepLearning\data\TGRS-HRRSD-Dataset-mstr-gthb\OPT2017\JPEGImages
+
+for scaled yolov4
+runfile('tools/model_converter/convert.py', args='--yolo4_reorder cfg/yolov4-csp_fixed.cfg weights/yolov4-csp.weights weights/scaled-yolov4-csp.h5')
+
+for evaluation
+runfile('eval.py', args='--model_path=logs/000/6-decay-non-sgd-0.0000075-62/ep004-loss51.656-val_loss52.158.h5 --anchors_path=configs/yolo4_anchors.txt --classes_path=configs/HD_classes.txt --model_image_size=416x416 --eval_type=VOC --iou_threshold=0.5 --conf_threshold=0.1 --annotation_file=annotations/tiny.txt --save_result')
